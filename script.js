@@ -48,20 +48,24 @@ function createList(data) {
 	data.forEach((element) => {
 		const li = document.createElement('li');
 		li.textContent = `${element.descriptor} | ${element.complaint_type}`;
+		// Create More info button
 		const btn = document.createElement('button');
 		btn.textContent = 'More Info';
 		btn.classList.add('complaints-btn');
+		// Create paragraph for more info
 		const p = document.createElement('p');
 		p.innerHTML = `Date: ${element.created_date} <br>Status: ${element.status}`;
 		if (element.resolution_description) {
 			p.innerHTML += `<br>${element.resolution_description}`;
 		}
 		p.classList.add('hide-info');
+		// Add map button
 		const mapBtn = document.createElement('button');
 		mapBtn.textContent = 'Show Map';
 		mapBtn.classList.add('map-btn');
 		mapBtn.dataset.lat = element.latitude;
 		mapBtn.dataset.long = element.longitude;
+		// Append elements to DOM
 		li.appendChild(btn);
 		li.appendChild(p);
 		p.appendChild(mapBtn);
@@ -109,6 +113,7 @@ function toggleInfo(event) {
 	}
 }
 
+// Create Map at lat, long and append to parent element.
 function createMap(lat, long, parent) {
 	const div = document.createElement('div');
 	const mapIframe = document.createElement('iframe');
