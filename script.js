@@ -9,6 +9,7 @@ const boroughsEl = document.querySelector('.boroughs');
 const numOfComplaintsEl = document.querySelector('#numOfComplaints');
 const complaintsULEl = document.querySelector('#complaints-list');
 const boroughH2El = document.querySelector('#borough');
+const categoriesEl = document.querySelector('#categories');
 
 /* Event Listener */
 boroughsEl.addEventListener('click', createURL);
@@ -28,12 +29,10 @@ function createURL(event) {
 	let url = `${BASE_URL}&$limit=${limit}&borough=`;
 	borough = event.target.id;
 	// If borough is STATEN ISLAND then we need to add %20 to url for a space.
-	switch (borough) {
-		case 'STATENISLAND':
-			url += 'STATEN%20ISLAND';
-			break;
-		default:
-			url += borough;
+	if (borough === 'STATENISLAND') {
+		url += 'STATEN%20ISLAND';
+	} else {
+		url += borough;
 	}
 	getData(url);
 }
@@ -43,11 +42,11 @@ function createList(data) {
 	complaintsULEl.innerHTML = '';
 	// set H2 with name of selected borough
 	boroughH2El.textContent = data[0].borough;
-
+	const categoryCount = {};
 	// Loop through all of the returned incidents and append an li for each one.
 	data.forEach((element) => {
 		const li = document.createElement('li');
-		li.textContent = `${element.complaint_type} | ${element.descriptor}`;
+		li.textContent = `${element.descriptor} | ${element.complaint_type}`;
 		const btn = document.createElement('button');
 		btn.textContent = 'More Info';
 		btn.classList.add('complaints-btn');
@@ -60,7 +59,20 @@ function createList(data) {
 		li.appendChild(btn);
 		li.appendChild(p);
 		complaintsULEl.appendChild(li);
+		// Count instances of each complaint_type
+		if (categoryCount[element.complaint_type]) {
+			categoryCount[element.complaint_type]++;
+		} else {
+			categoryCount[element.complaint_type] = 1;
+		}
 	});
+	// Loop through categoryCount object and display list of categories with counts
+	categoriesEl.innerHTML = '';
+	for (cat in categoryCount) {
+		const catLi = document.createElement('li');
+		catLi.textContent = `${cat}: ${categoryCount[cat]}`;
+		categoriesEl.appendChild(catLi);
+	}
 }
 
 // Fetch data at given url

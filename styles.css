@@ -1,3 +1,68 @@
+* {
+	box-sizing: border-box;
+}
+
+html {
+	background: url('./new-york.jpg') no-repeat center center fixed;
+}
+body {
+	max-width: 900px;
+	background-color: rgb(255, 255, 255, 0.8);
+	margin: 2em auto;
+	min-height: 90vh;
+	border-radius: 20px;
+	font-size: 16px;
+}
+
+header,
+main {
+	padding: 1em;
+}
+
+h1 {
+	text-align: center;
+	color: black;
+}
+
+.boroughs {
+	display: flex;
+	justify-content: center;
+	gap: 1em;
+}
+
+.boroughs button,
+input {
+	padding: 1em;
+}
+
+.boroughs button {
+	background-color: darkslategray;
+	color: white;
+}
+
+.boroughs button:hover {
+	background-color: dimgray;
+}
+
+.boroughs button:active {
+	transform: scale(0.95);
+	background-color: darkslategray;
+}
+
 .hide-info {
 	display: none;
+}
+
+#categories li {
+	display: inline-block;
+	margin: 5px;
+}
+
+#complaints-list li {
+	margin: 2em 1em;
+	padding: 1em;
+	border-top: 1px solid black;
+}
+#complaints-list button {
+	float: right;
 }
