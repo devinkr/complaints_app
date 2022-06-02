@@ -66,3 +66,7 @@ input {
 #complaints-list button {
 	float: right;
 }
+
+.map {
+	margin: 2em;
+}

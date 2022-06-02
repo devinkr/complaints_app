@@ -10,6 +10,7 @@ const numOfComplaintsEl = document.querySelector('#numOfComplaints');
 const complaintsULEl = document.querySelector('#complaints-list');
 const boroughH2El = document.querySelector('#borough');
 const categoriesEl = document.querySelector('#categories');
+const mapEl = document.querySelector('#map');
 
 /* Event Listener */
 boroughsEl.addEventListener('click', createURL);
@@ -56,8 +57,14 @@ function createList(data) {
 			p.innerHTML += `<br>${element.resolution_description}`;
 		}
 		p.classList.add('hide-info');
+		const mapBtn = document.createElement('button');
+		mapBtn.textContent = 'Show Map';
+		mapBtn.classList.add('map-btn');
+		mapBtn.dataset.lat = element.latitude;
+		mapBtn.dataset.long = element.longitude;
 		li.appendChild(btn);
 		li.appendChild(p);
+		p.appendChild(mapBtn);
 		complaintsULEl.appendChild(li);
 		// Count instances of each complaint_type
 		if (categoryCount[element.complaint_type]) {
@@ -91,8 +98,34 @@ function getData(url) {
 
 // Toggle additional complaint info
 function toggleInfo(event) {
-	if (!event.target.matches('.complaints-btn')) {
-		return;
+	if (event.target.matches('.complaints-btn')) {
+		event.target.nextSibling.classList.toggle('hide-info');
+	} else if (event.target.matches('.map-btn')) {
+		createMap(
+			event.target.dataset.lat,
+			event.target.dataset.long,
+			event.target.parentElement
+		);
 	}
-	event.target.nextSibling.classList.toggle('hide-info');
 }
+
+function createMap(lat, long, parent) {
+	const div = document.createElement('div');
+	const mapIframe = document.createElement('iframe');
+	div.classList.add('map');
+	mapIframe.width = '500';
+	mapIframe.height = '400';
+	mapIframe.frameBorder = '0';
+	mapIframe.src = `https://www.bing.com/maps/embed?h=400&w=500&lvl=13&typ=d&sty=r&src=SHELL&FORM=MBEDV8&cp=${lat}~${long}`;
+	mapIframe.scrolling = 'no';
+	div.appendChild(mapIframe);
+	parent.appendChild(div);
+}
+
+/* <iframe
+	id='map'
+	width='500'
+	height='400'
+	frameborder='0'
+	src='https://www.bing.com/maps/embed?h=400&w=500&lvl=13&typ=d&sty=r&src=SHELL&FORM=MBEDV8&cp=40.72436422174084~-74.00939941404641'
+	scrolling='no'></iframe>; */
