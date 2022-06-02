@@ -12,9 +12,13 @@ const boroughH2El = document.querySelector('#borough');
 
 /* Event Listener */
 boroughsEl.addEventListener('click', createURL);
+complaintsULEl.addEventListener('click', toggleInfo);
 
 /* Functions */
 function createURL(event) {
+	if (!event.target.matches('button')) {
+		return;
+	}
 	let limit = numOfComplaintsEl.value;
 	numOfComplaintsEl.value = '';
 	// If no limit is specified set default to 10
@@ -43,11 +47,16 @@ function createList(data) {
 	// Loop through all of the returned incidents and append an li for each one.
 	data.forEach((element) => {
 		const li = document.createElement('li');
+		li.textContent = `${element.complaint_type} | ${element.descriptor}`;
 		const btn = document.createElement('button');
-		btn.textContent = 'WHAT DID THE POLICE DO?';
+		btn.textContent = 'More Info';
+		btn.classList.add('complaints-btn');
 		const p = document.createElement('p');
-		p.textContent = `${element.status} ${element.resolution_description}`;
-		li.textContent = `${element.descriptor} | ${element.created_date} | ${element.agency}`;
+		p.innerHTML = `Date: ${element.created_date} <br>Status: ${element.status}`;
+		if (element.resolution_description) {
+			p.innerHTML += `<br>${element.resolution_description}`;
+		}
+		p.classList.add('hide-info');
 		li.appendChild(btn);
 		li.appendChild(p);
 		complaintsULEl.appendChild(li);
@@ -66,4 +75,12 @@ function getData(url) {
 		.catch((err) => {
 			console.log('Error', err);
 		});
+}
+
+// Toggle additional complaint info
+function toggleInfo(event) {
+	if (!event.target.matches('.complaints-btn')) {
+		return;
+	}
+	event.target.nextSibling.classList.toggle('hide-info');
 }
