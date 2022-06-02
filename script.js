@@ -48,28 +48,14 @@ function createList(data) {
 	// Loop through all of the returned incidents and append an li for each one.
 	data.forEach((element) => {
 		const li = document.createElement('li');
-		li.textContent = `${element.descriptor} | ${element.complaint_type}`;
-		// Create More info button
-		const btn = document.createElement('button');
-		btn.textContent = 'More Info';
-		btn.classList.add('complaints-btn');
-		// Create paragraph for more info
-		const p = document.createElement('p');
-		p.innerHTML = `Date: ${element.created_date} <br>Status: ${element.status}`;
+		// Create HTML
+		let listHTML = `${element.descriptor} | ${element.complaint_type}<button class="complaints-btn">More Info</button><p class="hide-info">Date: ${element.created_date} <br>Status: ${element.status}`;
 		if (element.resolution_description) {
-			p.innerHTML += `<br>${element.resolution_description}`;
+			listHTML += `<br>${element.resolution_description}`;
 		}
-		p.classList.add('hide-info');
-		// Add map button
-		const mapBtn = document.createElement('button');
-		mapBtn.textContent = 'Show Map';
-		mapBtn.classList.add('map-btn');
-		mapBtn.dataset.lat = element.latitude;
-		mapBtn.dataset.long = element.longitude;
-		// Append elements to DOM
-		li.appendChild(btn);
-		li.appendChild(p);
-		p.appendChild(mapBtn);
+		listHTML += `<button class="map-btn" data-lat="${element.latitude}" data-long="${element.longitude}">Show Map</button></p>`;
+		li.innerHTML = listHTML;
+		// Append li to DOM
 		complaintsULEl.appendChild(li);
 		// Count instances of each complaint_type
 		if (categoryCount[element.complaint_type]) {
