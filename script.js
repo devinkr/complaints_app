@@ -116,16 +116,8 @@ function createMap(lat, long, parent) {
 	mapIframe.width = '500';
 	mapIframe.height = '400';
 	mapIframe.frameBorder = '0';
-	mapIframe.src = `https://www.bing.com/maps/embed?h=400&w=500&lvl=13&typ=d&sty=r&src=SHELL&FORM=MBEDV8&cp=${lat}~${long}`;
+	mapIframe.src = `https://www.bing.com/maps/embed?h=400&w=500&lvl=15&typ=d&sty=r&src=SHELL&FORM=MBEDV8&cp=${lat}~${long}`;
 	mapIframe.scrolling = 'no';
 	div.appendChild(mapIframe);
 	parent.appendChild(div);
 }
-
-/* <iframe
-	id='map'
-	width='500'
-	height='400'
-	frameborder='0'
-	src='https://www.bing.com/maps/embed?h=400&w=500&lvl=13&typ=d&sty=r&src=SHELL&FORM=MBEDV8&cp=40.72436422174084~-74.00939941404641'
-	scrolling='no'></iframe>; */
