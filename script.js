@@ -3,6 +3,7 @@ console.log('Snoop Dougie Doug');
 /* Constants */
 const BASE_URL =
 	'https://data.cityofnewyork.us/resource/erm2-nwe9.json?agency=NYPD&$order=created_date%20DESC';
+const DEFAULT_LIMIT = 10;
 
 /* Cached Elements */
 const boroughsEl = document.querySelector('.boroughs');
@@ -25,7 +26,7 @@ function createURL(event) {
 	numOfComplaintsEl.value = '';
 	// If no limit is specified set default to 10
 	if (!limit) {
-		limit = 10;
+		limit = DEFAULT_LIMIT;
 	}
 	let url = `${BASE_URL}&$limit=${limit}&borough=`;
 	borough = event.target.id;
